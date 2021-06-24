@@ -2,8 +2,6 @@ module Securenv
   class Set
     def call(variable:, value:, app:, stage:)
       key = "#{app}-#{stage}-#{variable}"
-      puts "Setting value for key: #{key}"
-
 
       resp = client.put_parameter({
         name: key,
@@ -14,6 +12,8 @@ module Securenv
         overwrite: true,
         tier: "Standard" # accepts Standard, Advanced, Intelligent-Tiering
       })
+
+      puts "Set value for key #{key} for version #{resp.version}"
     end
 
     def client
