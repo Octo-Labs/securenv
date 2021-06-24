@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require_relative "../lib/securenv/cli/application"
+
+Securenv::CLI::Application.start(ARGV)
