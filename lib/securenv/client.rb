@@ -61,8 +61,30 @@ module Securenv
       raise ParameterNotFoundError.new "#{variable} is not set for app: #{app} and stage: #{stage}"
     end
 
+    def list
+      resp = sqs_client.get_parameters_by_path({
+        path: parameter_path,
+        with_decryption: true
+      })
+      parameters = resp.parameters.map do |param|
+        Parameter.new({
+          name: param.name,
+          version: param.version,
+          value: param.value
+        })
+      end
+
+      return parameters
+    rescue Aws::SSM::Errors::ParameterNotFound
+      raise ParameterNotFoundError.new "#{variable} is not set for app: #{app} and stage: #{stage}"
+    end
+
+    def parameter_path
+      "/#{app}/#{stage}"
+    end
+
     def parameter_name_for(variable)
-      "#{app}-#{stage}-#{variable}"
+      "#{parameter_path}/#{variable}"
     end
 
     def sqs_client

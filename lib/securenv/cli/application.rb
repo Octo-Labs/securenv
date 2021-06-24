@@ -62,6 +62,23 @@ module Securenv
       rescue Securenv::ParameterNotFoundError => e
         puts e.to_s
       end
+
+      desc "list", "list all secure environment variables for an app and stage"
+      option :app, :required => true, :aliases => "-a", :desc => "The name of the app."
+      option :stage, :required => true, :aliases => "-s", :desc => "The name of the stage."
+      def list
+        client = Securenv::Client.new({
+          app: options[:app],
+          stage: options[:stage]
+        })
+        parameters = client.list
+        parameters.each do |param|
+          puts "#{param.var_name}: #{param.value}"
+        end
+
+      rescue Securenv::ParameterNotFoundError => e
+        puts e.to_s
+      end
     end
   end
 end

@@ -9,5 +9,9 @@ module Securenv
       @value = value
       @version = version
     end
+
+    def var_name
+      name.split('/').last
+    end
   end
 end
