@@ -1,9 +1,9 @@
 require "securenv/version"
-require "securenv/set"
+require "securenv/client"
+require "securenv/parameter"
 
 require 'aws-sdk-ssm'
 
 module Securenv
-  class Error < StandardError; end
-  # Your code goes here...
+  class ParameterNotFoundError < StandardError; end
 end
