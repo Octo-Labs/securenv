@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     securenv (0.1.0)
+      aws-sdk-ssm
       thor
 
 GEM
@@ -9,11 +10,24 @@ GEM
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    aws-eventstream (1.1.1)
+    aws-partitions (1.471.0)
+    aws-sdk-core (3.115.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-ssm (1.111.0)
+      aws-sdk-core (~> 3, >= 3.112.0)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.2.3)
+      aws-eventstream (~> 1, >= 1.0.2)
     crack (0.4.5)
       rexml
     diff-lcs (1.4.4)
     docile (1.4.0)
     hashdiff (1.0.1)
+    jmespath (1.4.0)
     public_suffix (4.0.6)
     rake (12.3.3)
     rexml (3.2.5)

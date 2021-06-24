@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
 
 
   spec.add_dependency "thor" # Thor drives the CLI
+  spec.add_dependency "aws-sdk-ssm"
 
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'webmock'
