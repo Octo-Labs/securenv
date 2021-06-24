@@ -75,8 +75,6 @@ module Securenv
       end
 
       return parameters
-    rescue Aws::SSM::Errors::ParameterNotFound
-      raise ParameterNotFoundError.new "#{variable} is not set for app: #{app} and stage: #{stage}"
     end
 
     def parameter_path

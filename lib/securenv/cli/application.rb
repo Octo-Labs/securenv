@@ -41,7 +41,7 @@ module Securenv
           variable: var
         })
 
-        puts "#{parameter.name} = #{parameter.value}"
+        puts "#{parameter.var_name}: #{parameter.value}"
       rescue Securenv::ParameterNotFoundError => e
         puts e.to_s
       end
@@ -72,8 +72,12 @@ module Securenv
           stage: options[:stage]
         })
         parameters = client.list
-        parameters.each do |param|
-          puts "#{param.var_name}: #{param.value}"
+        if parameters.any?
+          parameters.each do |param|
+            puts "#{param.var_name}: #{param.value}"
+          end
+        else
+          puts "No securenv variables are present for this app and stage"
         end
 
       rescue Securenv::ParameterNotFoundError => e
