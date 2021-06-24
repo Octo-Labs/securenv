@@ -1,8 +1,6 @@
 # Securenv
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/securenv`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Securely store and set ENV variables via AWS SSM.
 
 ## Installation
 
@@ -22,7 +20,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+**NOTE : These docs are currently aspirational. This gem is very new and doesn't do _anything_ yet. The
+following is "documentation driven development".**
+
+### Set a secure environment variable
+
+You can set values via the command line with `securenv set`. (Similar to `heroku config:set`.)
+
+```
+securenv set FOO=bar --app myapp --stage production
+```
+
+Or you can use the short form:
+
+```
+securenv set FOO=bar -a myapp -s production
+```
+
+### Using secure environment variables in your app
+
+Before or during the boot stage of your app you can require `securenv` and give it a list of ENV variables
+to populate.
+
+```ruby
+require 'securenv'
+Securenv.app = 'myapp' # For rails you could use Rails.application.class.module_parent.name
+Securenv.app = ENV['STAGE'] # For rails you might use ENV['RAILS_ENV']
+Securenv.populate %w[
+  FOO
+  MY_SECRET_KEY
+]
+```
+
+Then you'll be able to use `ENV['FOO']` to access the value that you set previously.
 
 ## Development
 
