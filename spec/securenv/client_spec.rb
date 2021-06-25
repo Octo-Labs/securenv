@@ -2,7 +2,7 @@ RSpec.describe Securenv::Client do
   let(:fake_ssm_client){ double Aws::SSM::Client }
   let(:app){ 'testapp' }
   let(:stage){ 'testing' }
-  let(:client){ Securenv::Client.new({app: app, stage: stage}) }
+  let(:client){ Securenv::Client.new(app: app, stage: stage) }
 
   before do
     allow(Aws::SSM::Client).to receive(:new).and_return(fake_ssm_client)
