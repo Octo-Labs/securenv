@@ -10,7 +10,7 @@ module Securenv
     def set(variable:, value:)
       parameter_name = parameter_name_for(variable)
 
-      resp = sqs_client.put_parameter({
+      resp = ssm_client.put_parameter({
         name: parameter_name,
         description: "Set via securenv",
         value: value,
@@ -30,7 +30,7 @@ module Securenv
 
     def get(variable:)
       parameter_name = parameter_name_for(variable)
-      resp = sqs_client.get_parameter({
+      resp = ssm_client.get_parameter({
         name: parameter_name,
         with_decryption: true
       })
@@ -47,7 +47,7 @@ module Securenv
 
     def unset(variable:)
       parameter_name = parameter_name_for(variable)
-      sqs_client.delete_parameter({
+      ssm_client.delete_parameter({
         name: parameter_name
       })
       parameter = Parameter.new({
@@ -62,7 +62,7 @@ module Securenv
     end
 
     def list
-      resp = sqs_client.get_parameters_by_path({
+      resp = ssm_client.get_parameters_by_path({
         path: parameter_path,
         with_decryption: true
       })
@@ -92,8 +92,8 @@ module Securenv
       "#{parameter_path}/#{variable}"
     end
 
-    def sqs_client
-      @sqs_client = Aws::SSM::Client.new
+    def ssm_client
+      @ssm_client = Aws::SSM::Client.new
     end
   end
 end
