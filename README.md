@@ -20,8 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-**NOTE : These docs are currently aspirational. This gem is very new and doesn't do _anything_ yet. The
-following is "documentation driven development".**
+There are two parts to using `securenv`:
+1.  Setting secure environment variables in SSM via the command line or programatically.
+2.  Populating a runtime ENV with values previously stored in SSM.
 
 ### Set a secure environment variable
 
@@ -37,6 +38,13 @@ Or you can use the short form:
 securenv set FOO=bar -a myapp -s production
 ```
 
+If you want to set them programtically you can do something like this:
+
+```ruby
+securenv = Securenv::Client.new(app: 'myapp', stage: 'dev')
+securenv.set(variable: 'FOO', value: 'bar')
+```
+
 ### Using secure environment variables in your app
 
 Before or during the boot stage of your app you can require `securenv` and give it a list of ENV variables
@@ -44,15 +52,16 @@ to populate.
 
 ```ruby
 require 'securenv'
-Securenv.app = 'myapp' # For rails you could use Rails.application.class.module_parent.name
-Securenv.app = ENV['STAGE'] # For rails you might use ENV['RAILS_ENV']
-Securenv.populate %w[
-  FOO
-  MY_SECRET_KEY
-]
+
+securenv = Securenv::Client.new(
+  app: 'myapp', # For rails you could use Rails.application.class.module_parent.name
+  stage: ENV['STAGE'] # For rails you might use ENV['RAILS_ENV']
+)
+
+securenv.populate_env
 ```
 
-Then you'll be able to use `ENV['FOO']` to access the value that you set previously.
+Then you'll be able to use `ENV['FOO']` (and others) to access the value that you set previously.
 
 ## Development
 
