@@ -19,11 +19,11 @@ module Securenv
         overwrite: true,
         tier: "Standard" # accepts Standard, Advanced, Intelligent-Tiering
       })
-      parameter = Parameter.new({
+      parameter = Parameter.new(
        name: parameter_name,
        version: resp.version,
        value: value
-      })
+      )
 
       return parameter
     end
@@ -34,11 +34,11 @@ module Securenv
         name: parameter_name,
         with_decryption: true
       })
-      parameter = Parameter.new({
+      parameter = Parameter.new(
        name: parameter_name,
        version: resp.parameter.version,
        value: resp.parameter.value
-      })
+      )
 
       return parameter
     rescue Aws::SSM::Errors::ParameterNotFound
@@ -50,11 +50,11 @@ module Securenv
       ssm_client.delete_parameter({
         name: parameter_name
       })
-      parameter = Parameter.new({
+      parameter = Parameter.new(
        name: parameter_name,
        version: nil,
        value: nil
-      })
+      )
 
       return parameter
     rescue Aws::SSM::Errors::ParameterNotFound
@@ -67,11 +67,11 @@ module Securenv
         with_decryption: true
       })
       parameters = resp.parameters.map do |param|
-        Parameter.new({
+        Parameter.new(
           name: param.name,
           version: param.version,
           value: param.value
-        })
+        )
       end
 
       return parameters
