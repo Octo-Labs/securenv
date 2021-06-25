@@ -77,6 +77,13 @@ module Securenv
       return parameters
     end
 
+    def populate_env
+      parameters = list
+      parameters.each do |param|
+        ENV[param.var_name] = param.value
+      end
+    end
+
     def parameter_path
       "/#{app}/#{stage}"
     end
