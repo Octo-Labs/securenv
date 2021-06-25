@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    securenv (0.1.1)
+    securenv (1.0.0)
       aws-sdk-ssm
       thor
 
